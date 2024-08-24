@@ -3,9 +3,23 @@ book_path = "books/frankenstein.txt"
 def main():
     book_content = get_book_text(book_path)
     words = count_words(book_content)
-    print(f"Number of words in the book: {words}")
     chars = count_chars(book_content)
-    print(chars)
+    list_of_letters = []
+    for char in chars:
+        if char.isalpha():
+            temp_dict = {}
+            temp_dict["letter"] = char
+            temp_dict["num"] = chars[char]
+            list_of_letters.append(temp_dict)
+    list_of_letters.sort(reverse=True, key=sort_on)
+    print(f"--- Begin report of {book_path} ---")
+    print(f"Number of words in the book: {words}")
+    print()
+    for item in list_of_letters:
+        print(f'The \'{item["letter"]}\' character was found {item["num"]} times')
+
+def sort_on(dict):
+    return dict["num"]
 
 def count_words(text):
     words = text.split()
